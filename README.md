@@ -6,7 +6,7 @@
 ![ESP32](https://img.shields.io/badge/ESP32-Compatible-green.svg)
 ![PlatformIO](https://img.shields.io/badge/PlatformIO-Compatible-orange.svg)
 
-# ESPNowAdhoc Library
+# ESP_NowAdhoc Library
 An advanced ESP-NOW ad-hoc networking library for ESP32. It enables direct communication among multiple ESP32 devices without a Wi‑Fi access point.  
 A packaged library to easily and securely build an ad-hoc network environment using ESP-NOW. It packages the necessary features for ad-hoc use: group settings, role settings, security settings, automatic peer discovery via broadcast, and connected-peer status monitoring via heartbeat. Create an ad-hoc network using only ESP32 devices in three steps. This makes radio communication in ESP32 environments—previously expensive and complex—easy and low-cost.
 

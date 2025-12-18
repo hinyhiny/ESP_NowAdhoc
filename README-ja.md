@@ -6,7 +6,7 @@
 ![ESP32](https://img.shields.io/badge/ESP32-Compatible-green.svg)
 ![PlatformIO](https://img.shields.io/badge/PlatformIO-Compatible-orange.svg)
 
-# ESPNowAdhoc Library
+# ESP_NowAdhoc Library
 ESP32用の高度なESP-NOWアドホックネットワークライブラリ。Wi-Fiアクセスポイントなしで、複数のESP32デバイス間の直接通信を実現します。
 ESP_NOWを利用したアドホックネットワーク環境を簡単に安全に構築できるパッケージライブラリ。アドホックネットワークとして利用するのに必要な、グループ設定、ロール設定、セキュリティー設定、ブロードキャストによる自動ピアリング、ハートビートによる接続済みピアの状態監視を、パッケージ化。３ステップで、簡単にアドホックネットワーク環境をESP32だけで実現。これまで高額で、複雑だった、ESP32環境での無線通信を簡単に低価格で実現可能。
 
