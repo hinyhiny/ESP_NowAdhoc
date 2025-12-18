@@ -1,6 +1,5 @@
-[日本語はこちら](https://github.com/cpei2025/ESPNowAdhoc/blob/main/README-ja.md)
+[日本語はこちら](https://github.com/hinyhiny/ESP_NowAdhoc/blob/main/README-ja.md)
 
-![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Arduino](https://img.shields.io/badge/Arduino-Compatible-blue.svg)
 ![ESP32](https://img.shields.io/badge/ESP32-Compatible-green.svg)
@@ -81,7 +80,7 @@ A packaged library to easily and securely build an ad-hoc network environment us
 3. Click Install
 
 ### Manual Install
-1. Download the ZIP from [Releases](https://github.com/cpei2025/ESPNowAdhoc/releases)
+1. Download the ZIP from [Releases](https://github.com/hinyhiny/ESP_NowAdhoc/releases)
 2. Arduino IDE: Sketch → Include Library → Add .ZIP Library...
 3. Ensure the **ESP32 board package** is already installed
 
@@ -93,7 +92,7 @@ platform = espressif32
 board = esp32dev
 framework = arduino
 lib_deps = 
-    https://github.com/cpei2025/ESPNowAdhoc.git
+    https://github.com/hinyhiny/ESP_NowAdhoc.git
 ```
 
 ## STEP2 Initial Configuration (Important)
@@ -176,4 +175,4 @@ Different models that support ESP-NOW can send and receive to each other.
 ---
 
 ## For the API, see the WIKI
-[[API Reference]](https://github.com/cpei2025/ESPNowAdhoc/wiki/API%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9)
+[[API Reference]](https://github.com/hinyhiny/ESP_NowAdhoc/wiki/API)

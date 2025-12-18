@@ -1,6 +1,5 @@
-[[In English README.md] ](https://github.com/cpei2025/ESPNowAdhoc/blob/main/README.md)
+[[In English README.md] ](https://github.com/hinyhiny/ESP_NowAdhoc/blob/main/README.md)
 
-![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 ![Arduino](https://img.shields.io/badge/Arduino-Compatible-blue.svg)
 ![ESP32](https://img.shields.io/badge/ESP32-Compatible-green.svg)
@@ -81,7 +80,7 @@ ESP_NOWを利用したアドホックネットワーク環境を簡単に安全�
 3. インストールをクリック
 
 ### 手動インストール
-1. [Releases](https://github.com/cpei2025/ESPNowAdhoc/releases)からZIPをダウンロード
+1. [Releases](https://github.com/hinyhiny/ESP_NowAdhoc/releases)からZIPをダウンロード
 2. Arduino IDE: Sketch → Include Library → Add .ZIP Library...
 3. **ESP32 ボードパッケージ** がインストール済みであることを確認してください。
 
@@ -93,7 +92,7 @@ platform = espressif32
 board = esp32dev
 framework = arduino
 lib_deps = 
-    https://github.com/cpei2025/ESPNowAdhoc.git
+    https://github.com/hinyhiny/ESP_NowAdhoc.git
 ```
 
 ## STEP2 初期設定(重要)
@@ -180,7 +179,7 @@ espnow.setDebug(false);
 ---
 
 ## APIに関しては、WIKIを参照
-[[APIリファレンス]](https://github.com/cpei2025/ESPNowAdhoc/wiki/API%E3%83%AA%E3%83%95%E3%82%A1%E3%83%AC%E3%83%B3%E3%82%B9)
+[[APIリファレンス]](https://github.com/hinyhiny/ESP_NowAdhoc/wiki/API)
 
 
 
