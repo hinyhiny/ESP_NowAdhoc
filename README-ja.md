@@ -32,7 +32,7 @@ ESP_NOWを利用したアドホックネットワーク環境を簡単に安全�
 - 自動接続・Wi-FI AP不要を活かした野外での自立型センサーネットワーク
 - 自動接続・Wi-FI AP不要を活かした自立型災害救援システム
 
-## ESPNowAdhocペイロード（送信パケット）仕様
+## ESP_NowAdhocペイロード（送信パケット）仕様
 - グループUUID（char 37 Bytes）
 - ロール（サーバー、クライアント）（bool 1 byte）
 - Wi-Fiチャンネル（将来自動チャンネル変更機能実装のために保留）（int）
@@ -76,7 +76,7 @@ ESP_NOWを利用したアドホックネットワーク環境を簡単に安全�
 
 ### Arduino IDE
 1. Sketch → Include Library → Manage Libraries...
-2. "ESPNowAdhoc"を検索
+2. "ESP_NowAdhoc"を検索
 3. インストールをクリック
 
 ### 手動インストール
@@ -113,7 +113,7 @@ lib_deps =
 ```
 ## STEP3 コーディング・リリース
 
-1. `ESPNowAdhoc` インスタンス生成  
+1. `ESP_NowAdhoc` インスタンス生成  
 2. `begin()` で初期化（Server/Client、セキュリティ有無を指定）  
 3. `setDataCallback()` / `setPeerEventCallback()` を設定  
 4. `loop()` 内で `update()` を毎回呼ぶ  
@@ -130,7 +130,7 @@ lib_deps =
 ### 問題2: データ送信に失敗する
 1. ペイロードのデーテフィールド容量（bytes）がESPNOW_DATA_SIZEを超えている
 2. 物理的な距離が遠すぎる
-3. #define ESPNOW_DATA_SIZE を設定の場合、 #include "ESPNowAdhoc.h"のの前に記述していること
+3. #define ESPNOW_DATA_SIZE を設定の場合、 #include "ESP_NowAdhoc.h"のの前に記述していること
 4. デバックモードで確認（setup()内で）
 ```
 espnow.setDebug(false);

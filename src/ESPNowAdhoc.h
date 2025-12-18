@@ -1,5 +1,5 @@
-#ifndef ESPNowAdhoc_H
-#define ESPNowAdhoc_H
+#ifndef ESP_NowAdhoc_H
+#define ESP_NowAdhoc_H
 
 #include <Arduino.h>
 #include <WiFi.h>
@@ -56,13 +56,13 @@ typedef struct __attribute__((packed)) {
 } espnow_message_t;
 
 // 前方宣言
-class ESPNowAdhoc;
+class ESP_NowAdhoc;
 
-class ESPNowAdhocPeer : public ESP_NOW_Peer {
+class ESP_NowAdhocPeer : public ESP_NOW_Peer {
 public:
-    ESPNowAdhocPeer(const uint8_t *mac_addr, uint8_t channel, wifi_interface_t iface, 
-                   ESPNowAdhoc* parent, const uint8_t *lmk = nullptr);
-    ~ESPNowAdhocPeer();
+    ESP_NowAdhocPeer(const uint8_t *mac_addr, uint8_t channel, wifi_interface_t iface, 
+                   ESP_NowAdhoc* parent, const uint8_t *lmk = nullptr);
+    ~ESP_NowAdhocPeer();
     
     bool begin();
     bool removePeer();
@@ -75,17 +75,17 @@ public:
     bool isServer;
     bool isSecure;
     
-    void setParent(ESPNowAdhoc* parent) { _parent = parent; }
+    void setParent(ESP_NowAdhoc* parent) { _parent = parent; }
     
 private:
     void processReceivedMessage(const uint8_t *data, size_t len, bool broadcast);
-    ESPNowAdhoc* _parent;
+    ESP_NowAdhoc* _parent;
 };
 
-class ESPNowAdhoc {
+class ESP_NowAdhoc {
 public:
-    ESPNowAdhoc();
-    ~ESPNowAdhoc();
+    ESP_NowAdhoc();
+    ~ESP_NowAdhoc();
     
     bool begin(bool isServerRole, bool useSecurity, const char* pmk = nullptr, const char* lmk = nullptr);
     void update();
@@ -158,8 +158,8 @@ private:
     unsigned long _heartbeatTimeout;
     unsigned long _statusDisplayInterval;
     
-    std::vector<ESPNowAdhocPeer*> _peers;
-    ESPNowAdhocPeer* _broadcastPeer;
+    std::vector<ESP_NowAdhocPeer*> _peers;
+    ESP_NowAdhocPeer* _broadcastPeer;
     
     DataCallback _dataCallback;
     PeerEventCallback _peerEventCallback;
@@ -167,8 +167,8 @@ private:
     char _pmkString[33];
     char _lmkString[33];
     
-    // フレンドクラスとしてESPNowAdhocPeerを宣言
-    friend class ESPNowAdhocPeer;
+    // フレンドクラスとしてESP_NowAdhocPeerを宣言
+    friend class ESP_NowAdhocPeer;
 };
 
 #endif

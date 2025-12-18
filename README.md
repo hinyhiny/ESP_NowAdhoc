@@ -32,7 +32,7 @@ A packaged library to easily and securely build an ad-hoc network environment us
 - Outdoor autonomous sensor networks leveraging auto-connection and no Wi‑Fi AP
 - Autonomous disaster relief systems leveraging auto-connection and no Wi‑Fi AP
 
-## ESPNowAdhoc Payload (transmission packet) Specification
+## ESP_NowAdhoc Payload (transmission packet) Specification
 - Group UUID (char 37 Bytes)
 - Role (Server, Client) (bool 1 byte)
 - Wi‑Fi channel (reserved for future automatic channel switching) (int)
@@ -76,7 +76,7 @@ A packaged library to easily and securely build an ad-hoc network environment us
 
 ### Arduino IDE
 1. Sketch → Include Library → Manage Libraries...
-2. Search for "ESPNowAdhoc"
+2. Search for "ESP_NowAdhoc"
 3. Click Install
 
 ### Manual Install
@@ -114,7 +114,7 @@ lib_deps =
 
 ## STEP3 Coding & Release
 
-1. Create an `ESPNowAdhoc` instance  
+1. Create an `ESP_NowAdhoc` instance  
 2. Initialize with `begin()` (specify Server/Client and whether security is enabled)  
 3. Set `setDataCallback()` / `setPeerEventCallback()`  
 4. Call `update()` on every iteration inside `loop()`  
@@ -130,7 +130,7 @@ lib_deps =
 ### Problem 2: Data transmission fails
 1. Payload data field size (bytes) exceeds ESPNOW_DATA_SIZE
 2. Physical distance is too great
-3. If you define `#define ESPNOW_DATA_SIZE`, make sure it is defined before `#include "ESPNowAdhoc.h"`
+3. If you define `#define ESPNOW_DATA_SIZE`, make sure it is defined before `#include "ESP_NowAdhoc.h"`
 4. Check in debug mode (inside `setup()`):
 ```
 espnow.setDebug(false);

@@ -1,44 +1,44 @@
-#include "ESPNowAdhoc.h"
+#include "ESP_NowAdhoc.h"
 #include <WiFi.h>
 
-// ==================== ESPNowAdhocPeer クラス ====================
+// ==================== ESP_NowAdhocPeer クラス ====================
 
-ESPNowAdhocPeer::ESPNowAdhocPeer(const uint8_t *mac_addr, uint8_t channel, wifi_interface_t iface, 
-                               ESPNowAdhoc* parent, const uint8_t *lmk)
+ESP_NowAdhocPeer::ESP_NowAdhocPeer(const uint8_t *mac_addr, uint8_t channel, wifi_interface_t iface, 
+                               ESP_NowAdhoc* parent, const uint8_t *lmk)
     : ESP_NOW_Peer(mac_addr, channel, iface, lmk), _parent(parent) {
     lastGetMs = millis();
     isServer = false;
     isSecure = (lmk != nullptr);
 }
 
-ESPNowAdhocPeer::~ESPNowAdhocPeer() {
+ESP_NowAdhocPeer::~ESP_NowAdhocPeer() {
     remove();
 }
 
-bool ESPNowAdhocPeer::begin() {
+bool ESP_NowAdhocPeer::begin() {
     return add();
 }
 
-bool ESPNowAdhocPeer::removePeer() {
+bool ESP_NowAdhocPeer::removePeer() {
     return remove();
 }
 
-bool ESPNowAdhocPeer::sendData(const uint8_t *data, size_t len) {
+bool ESP_NowAdhocPeer::sendData(const uint8_t *data, size_t len) {
     return send(data, len);
 }
 
-void ESPNowAdhocPeer::onSent(bool success) {
+void ESP_NowAdhocPeer::onSent(bool success) {
     if (_parent && _parent->debugEnabled()) {
-        Serial.print("[ESPNowAdhocPeer] Send ");
+        Serial.print("[ESP_NowAdhocPeer] Send ");
         Serial.println(success ? "Success" : "Failed");
     }
 }
 
-void ESPNowAdhocPeer::onReceive(const uint8_t *data, size_t len, bool broadcast) {
+void ESP_NowAdhocPeer::onReceive(const uint8_t *data, size_t len, bool broadcast) {
     processReceivedMessage(data, len, broadcast);
 }
 
-void ESPNowAdhocPeer::processReceivedMessage(const uint8_t *data, size_t len, bool broadcast) {
+void ESP_NowAdhocPeer::processReceivedMessage(const uint8_t *data, size_t len, bool broadcast) {
     if (!_parent || len < sizeof(espnow_message_t)) {
         return;
     }
@@ -88,9 +88,9 @@ void ESPNowAdhocPeer::processReceivedMessage(const uint8_t *data, size_t len, bo
     }
 }
 
-// ==================== ESPNowAdhoc クラス ====================
+// ==================== ESP_NowAdhoc クラス ====================
 
-ESPNowAdhoc::ESPNowAdhoc() {
+ESP_NowAdhoc::ESP_NowAdhoc() {
     _isServer = false;
     _useSecurity = false;
     _debugEnabled = true;
@@ -119,7 +119,7 @@ ESPNowAdhoc::ESPNowAdhoc() {
     memset(_lmkString, 0, sizeof(_lmkString));
 }
 
-ESPNowAdhoc::~ESPNowAdhoc() {
+ESP_NowAdhoc::~ESP_NowAdhoc() {
     if (_broadcastPeer) {
         delete _broadcastPeer;
     }
@@ -134,7 +134,7 @@ ESPNowAdhoc::~ESPNowAdhoc() {
     ESP_NOW.end();
 }
 
-bool ESPNowAdhoc::begin(bool isServerRole, bool useSecurity, const char* pmk, const char* lmk) {
+bool ESP_NowAdhoc::begin(bool isServerRole, bool useSecurity, const char* pmk, const char* lmk) {
     _isServer = isServerRole;
     _useSecurity = useSecurity;
     
@@ -145,7 +145,7 @@ bool ESPNowAdhoc::begin(bool isServerRole, bool useSecurity, const char* pmk, co
             _pmk = (const uint8_t*)_pmkString;
             _lmk = (const uint8_t*)_lmkString;
         } else {
-            Serial.println("[ESPNowAdhoc] Error: Security mode requires PMK and LMK");
+            Serial.println("[ESP_NowAdhoc] Error: Security mode requires PMK and LMK");
             return false;
         }
     }
@@ -157,9 +157,9 @@ bool ESPNowAdhoc::begin(bool isServerRole, bool useSecurity, const char* pmk, co
     }
     
     // ブロードキャストピアの設定
-    _broadcastPeer = new ESPNowAdhocPeer(ESP_NOW.BROADCAST_ADDR, _wifiChannel, WIFI_IF_STA, this, nullptr);
+    _broadcastPeer = new ESP_NowAdhocPeer(ESP_NOW.BROADCAST_ADDR, _wifiChannel, WIFI_IF_STA, this, nullptr);
     if (!_broadcastPeer->begin()) {
-        Serial.println("[ESPNowAdhoc] Failed to create broadcast peer");
+        Serial.println("[ESP_NowAdhoc] Failed to create broadcast peer");
         return false;
     }
     
@@ -167,7 +167,7 @@ bool ESPNowAdhoc::begin(bool isServerRole, bool useSecurity, const char* pmk, co
     ESP_NOW.onNewPeer(registrationCallback, this);
     
     if (_debugEnabled) {
-        Serial.println("[ESPNowAdhoc] Initialization complete");
+        Serial.println("[ESP_NowAdhoc] Initialization complete");
         Serial.printf("  Role: %s\n", _isServer ? "SERVER" : "CLIENT");
         Serial.printf("  Security: %s\n", _useSecurity ? "ENABLED" : "DISABLED");
         Serial.printf("  Channel: %d\n", _wifiChannel);
@@ -180,7 +180,7 @@ bool ESPNowAdhoc::begin(bool isServerRole, bool useSecurity, const char* pmk, co
     return true;
 }
 
-void ESPNowAdhoc::setupWiFi() {
+void ESP_NowAdhoc::setupWiFi() {
     WiFi.mode(WIFI_STA);
     WiFi.setChannel(_wifiChannel);
     WiFi.setTxPower(WIFI_POWER_17dBm);
@@ -190,13 +190,13 @@ void ESPNowAdhoc::setupWiFi() {
     }
     
     if (_debugEnabled) {
-        Serial.println("[ESPNowAdhoc] WiFi initialized");
+        Serial.println("[ESP_NowAdhoc] WiFi initialized");
         Serial.printf("  MAC: %s\n", WiFi.macAddress().c_str());
         Serial.printf("  Channel: %d\n", _wifiChannel);
     }
 }
 
-bool ESPNowAdhoc::setupESPNow() {
+bool ESP_NowAdhoc::setupESPNow() {
     bool success;
     
     if (_useSecurity) {
@@ -206,12 +206,12 @@ bool ESPNowAdhoc::setupESPNow() {
     }
     
     if (!success) {
-        Serial.println("[ESPNowAdhoc] Failed to initialize ESP-NOW");
+        Serial.println("[ESP_NowAdhoc] Failed to initialize ESP-NOW");
         return false;
     }
     
     if (_debugEnabled) {
-        Serial.println("[ESPNowAdhoc] ESP-NOW initialized");
+        Serial.println("[ESP_NowAdhoc] ESP-NOW initialized");
         Serial.printf("  Version: %d\n", ESP_NOW.getVersion());
         Serial.printf("  Max Data Length: %d\n", ESP_NOW.getMaxDataLen());
     }
@@ -219,7 +219,7 @@ bool ESPNowAdhoc::setupESPNow() {
     return true;
 }
 
-void ESPNowAdhoc::update() {
+void ESP_NowAdhoc::update() {
     unsigned long currentTime = millis();
     
     // ブロードキャスト広告の送信
@@ -244,7 +244,7 @@ void ESPNowAdhoc::update() {
     }
 }
 
-void ESPNowAdhoc::sendBroadcastAdvertisement() {
+void ESP_NowAdhoc::sendBroadcastAdvertisement() {
     if (!_broadcastPeer) {
         return;
     }
@@ -265,12 +265,12 @@ void ESPNowAdhoc::sendBroadcastAdvertisement() {
     
     if (_broadcastPeer->sendData((uint8_t*)&msg, sizeof(msg))) {
         if (_debugEnabled) {
-            Serial.println("[ESPNowAdhoc] Broadcast advertisement sent");
+            Serial.println("[ESP_NowAdhoc] Broadcast advertisement sent");
         }
     }
 }
 
-void ESPNowAdhoc::sendHeartbeats() {
+void ESP_NowAdhoc::sendHeartbeats() {
     for (size_t i = 0; i < _peers.size(); i++) {
         if (_peers[i]) {
             espnow_message_t msg;
@@ -292,21 +292,21 @@ void ESPNowAdhoc::sendHeartbeats() {
             
             if (_debugEnabled) {
                 const uint8_t* mac = _peers[i]->addr();
-                Serial.printf("[ESPNowAdhoc] Heartbeat sent to %02X:%02X:%02X:%02X:%02X:%02X\n",
+                Serial.printf("[ESP_NowAdhoc] Heartbeat sent to %02X:%02X:%02X:%02X:%02X:%02X\n",
                     mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
             }
         }
     }
 }
 
-void ESPNowAdhoc::checkPeerTimeouts() {
+void ESP_NowAdhoc::checkPeerTimeouts() {
     for (auto it = _peers.begin(); it != _peers.end();) {
-        ESPNowAdhocPeer* peer = *it;
+        ESP_NowAdhocPeer* peer = *it;
         
         if (millis() - peer->lastGetMs > _heartbeatTimeout) {
             if (_debugEnabled) {
                 const uint8_t* mac = peer->addr();
-                Serial.printf("[ESPNowAdhoc] Peer timeout: %02X:%02X:%02X:%02X:%02X:%02X\n",
+                Serial.printf("[ESP_NowAdhoc] Peer timeout: %02X:%02X:%02X:%02X:%02X:%02X\n",
                     mac[0], mac[1], mac[2], mac[3], mac[4], mac[5]);
             }
             
@@ -323,8 +323,8 @@ void ESPNowAdhoc::checkPeerTimeouts() {
     }
 }
 
-void ESPNowAdhoc::displayStatus() {
-    Serial.println("\n[ESPNowAdhoc] ===== Status =====");
+void ESP_NowAdhoc::displayStatus() {
+    Serial.println("\n[ESP_NowAdhoc] ===== Status =====");
     Serial.printf("  Role: %s\n", _isServer ? "SERVER" : "CLIENT");
     Serial.printf("  Security: %s\n", _useSecurity ? "ENABLED" : "DISABLED");
     Serial.printf("  Channel: %d\n", _wifiChannel);
@@ -345,14 +345,14 @@ void ESPNowAdhoc::displayStatus() {
     Serial.println("=============================\n");
 }
 
-void ESPNowAdhoc::registrationCallback(const esp_now_recv_info_t *info, const uint8_t *data, int len, void *arg) {
-    ESPNowAdhoc* instance = static_cast<ESPNowAdhoc*>(arg);
+void ESP_NowAdhoc::registrationCallback(const esp_now_recv_info_t *info, const uint8_t *data, int len, void *arg) {
+    ESP_NowAdhoc* instance = static_cast<ESP_NowAdhoc*>(arg);
     if (instance && len >= sizeof(espnow_message_t)) {
         instance->processRegistration(info, data);
     }
 }
 
-void ESPNowAdhoc::processRegistration(const esp_now_recv_info_t *info, const uint8_t *data) {
+void ESP_NowAdhoc::processRegistration(const esp_now_recv_info_t *info, const uint8_t *data) {
     espnow_message_t *msg = (espnow_message_t *)data;
     
     // 広告グループIDチェック
@@ -363,7 +363,7 @@ void ESPNowAdhoc::processRegistration(const esp_now_recv_info_t *info, const uin
     // セキュリティモードチェック（異なるモードとは接続しない）
     if (msg->security != _useSecurity) {
         if (_debugEnabled) {
-            Serial.println("[ESPNowAdhoc] Security mode mismatch, ignoring registration");
+            Serial.println("[ESP_NowAdhoc] Security mode mismatch, ignoring registration");
         }
         return;
     }
@@ -389,13 +389,13 @@ void ESPNowAdhoc::processRegistration(const esp_now_recv_info_t *info, const uin
     }
 }
 
-void ESPNowAdhoc::addPeer(const uint8_t* mac, bool peerIsServer, bool peerIsSecure) {
-    ESPNowAdhocPeer* newPeer;
+void ESP_NowAdhoc::addPeer(const uint8_t* mac, bool peerIsServer, bool peerIsSecure) {
+    ESP_NowAdhocPeer* newPeer;
     
     if (_useSecurity) {
-        newPeer = new ESPNowAdhocPeer(mac, _wifiChannel, WIFI_IF_STA, this, _lmk);
+        newPeer = new ESP_NowAdhocPeer(mac, _wifiChannel, WIFI_IF_STA, this, _lmk);
     } else {
-        newPeer = new ESPNowAdhocPeer(mac, _wifiChannel, WIFI_IF_STA, this, nullptr);
+        newPeer = new ESP_NowAdhocPeer(mac, _wifiChannel, WIFI_IF_STA, this, nullptr);
     }
     
     if (newPeer->begin()) {
@@ -406,7 +406,7 @@ void ESPNowAdhoc::addPeer(const uint8_t* mac, bool peerIsServer, bool peerIsSecu
         _peers.push_back(newPeer);
         
         if (_debugEnabled) {
-            Serial.printf("[ESPNowAdhoc] New peer registered: %02X:%02X:%02X:%02X:%02X:%02X (%s)\n",
+            Serial.printf("[ESP_NowAdhoc] New peer registered: %02X:%02X:%02X:%02X:%02X:%02X (%s)\n",
                 mac[0], mac[1], mac[2], mac[3], mac[4], mac[5],
                 peerIsServer ? "SERVER" : "CLIENT");
         }
@@ -416,33 +416,33 @@ void ESPNowAdhoc::addPeer(const uint8_t* mac, bool peerIsServer, bool peerIsSecu
         }
     } else {
         delete newPeer;
-        Serial.println("[ESPNowAdhoc] Failed to add peer");
+        Serial.println("[ESP_NowAdhoc] Failed to add peer");
     }
 }
 
 // ==================== 公開メソッド ====================
 
-void ESPNowAdhoc::setDebug(bool enable) {
+void ESP_NowAdhoc::setDebug(bool enable) {
     _debugEnabled = enable;
 }
 
-void ESPNowAdhoc::setBroadcastInterval(unsigned long interval) {
+void ESP_NowAdhoc::setBroadcastInterval(unsigned long interval) {
     _broadcastInterval = interval;
 }
 
-void ESPNowAdhoc::setHeartbeatInterval(unsigned long interval) {
+void ESP_NowAdhoc::setHeartbeatInterval(unsigned long interval) {
     _heartbeatInterval = interval;
 }
 
-void ESPNowAdhoc::setHeartbeatTimeout(unsigned long timeout) {
+void ESP_NowAdhoc::setHeartbeatTimeout(unsigned long timeout) {
     _heartbeatTimeout = timeout;
 }
 
-void ESPNowAdhoc::setStatusDisplayInterval(unsigned long interval) {
+void ESP_NowAdhoc::setStatusDisplayInterval(unsigned long interval) {
     _statusDisplayInterval = interval;
 }
 
-int ESPNowAdhoc::getServerPeerCount() const {
+int ESP_NowAdhoc::getServerPeerCount() const {
     int count = 0;
     for (auto peer : _peers) {
         if (peer->isServer) {
@@ -452,7 +452,7 @@ int ESPNowAdhoc::getServerPeerCount() const {
     return count;
 }
 
-int ESPNowAdhoc::getClientPeerCount() const {
+int ESP_NowAdhoc::getClientPeerCount() const {
     int count = 0;
     for (auto peer : _peers) {
         if (!peer->isServer) {
@@ -462,11 +462,11 @@ int ESPNowAdhoc::getClientPeerCount() const {
     return count;
 }
 
-int ESPNowAdhoc::getTotalPeerCount() const {
+int ESP_NowAdhoc::getTotalPeerCount() const {
     return _peers.size();
 }
 
-bool ESPNowAdhoc::sendToAll(const uint8_t *data, size_t len) {
+bool ESP_NowAdhoc::sendToAll(const uint8_t *data, size_t len) {
     bool allSuccess = true;
     for (auto peer : _peers) {
         if (!peer->sendData(data, len)) {
@@ -476,7 +476,7 @@ bool ESPNowAdhoc::sendToAll(const uint8_t *data, size_t len) {
     return allSuccess;
 }
 
-bool ESPNowAdhoc::sendToServer(const uint8_t *data, size_t len) {
+bool ESP_NowAdhoc::sendToServer(const uint8_t *data, size_t len) {
     bool allSuccess = true;
     for (auto peer : _peers) {
         if (peer->isServer && !peer->sendData(data, len)) {
@@ -486,7 +486,7 @@ bool ESPNowAdhoc::sendToServer(const uint8_t *data, size_t len) {
     return allSuccess;
 }
 
-bool ESPNowAdhoc::sendToClients(const uint8_t *data, size_t len) {
+bool ESP_NowAdhoc::sendToClients(const uint8_t *data, size_t len) {
     bool allSuccess = true;
     for (auto peer : _peers) {
         if (!peer->isServer && !peer->sendData(data, len)) {
@@ -496,7 +496,7 @@ bool ESPNowAdhoc::sendToClients(const uint8_t *data, size_t len) {
     return allSuccess;
 }
 
-void ESPNowAdhoc::setGroupID(const char* advGroupID, const char* groupID) {
+void ESP_NowAdhoc::setGroupID(const char* advGroupID, const char* groupID) {
     if (advGroupID) {
         strncpy(_advGroupID, advGroupID, sizeof(_advGroupID));
     }
@@ -505,15 +505,15 @@ void ESPNowAdhoc::setGroupID(const char* advGroupID, const char* groupID) {
     }
 }
 
-void ESPNowAdhoc::setChannel(uint8_t channel) {
+void ESP_NowAdhoc::setChannel(uint8_t channel) {
     _wifiChannel = channel;
     WiFi.setChannel(channel);
 }
 
-void ESPNowAdhoc::setDataCallback(DataCallback callback) {
+void ESP_NowAdhoc::setDataCallback(DataCallback callback) {
     _dataCallback = callback;
 }
 
-void ESPNowAdhoc::setPeerEventCallback(PeerEventCallback callback) {
+void ESP_NowAdhoc::setPeerEventCallback(PeerEventCallback callback) {
     _peerEventCallback = callback;
 }

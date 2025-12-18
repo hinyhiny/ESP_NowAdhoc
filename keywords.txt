@@ -1,17 +1,17 @@
 #######################################
-# ESPNowAdhoc ライブラリ - キーワード定義
+# ESP_NowAdhoc ライブラリ - キーワード定義
 #######################################
 
 #######################################
 # クラス (KEYWORD1 - 緑色で表示)
 #######################################
-ESPNowAdhoc	KEYWORD1
-ESPNowAdhocPeer	KEYWORD1
+ESP_NowAdhoc	KEYWORD1
+ESP_NowAdhocPeer	KEYWORD1
 
 #######################################
 # メソッドと関数 (KEYWORD2 - 茶色で表示)
 #######################################
-# ESPNowAdhoc クラスのメソッド
+# ESP_NowAdhoc クラスのメソッド
 begin	KEYWORD2              # 初期化
 update	KEYWORD2              # 更新処理
 setDebug	KEYWORD2          # デバッグ設定
@@ -30,7 +30,7 @@ getServerPeerCount	KEYWORD2   # サーバーピア数取得
 getClientPeerCount	KEYWORD2   # クライアントピア数取得
 getTotalPeerCount	KEYWORD2    # 総ピア数取得
 
-# ESPNowAdhocPeer クラスのメソッド
+# ESP_NowAdhocPeer クラスのメソッド
 begin	KEYWORD2              # ピア初期化
 removePeer	KEYWORD2         # ピア削除
 sendData	KEYWORD2          # データ送信

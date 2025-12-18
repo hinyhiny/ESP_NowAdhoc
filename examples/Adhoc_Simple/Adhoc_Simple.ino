@@ -18,11 +18,11 @@
 
 // Library includes (Required)
 #include <Arduino.h>
-#include "ESPNowAdhoc.h"
+#include "ESP_NowAdhoc.h"
 
 
 // ==================== Global Variables ====================
-ESPNowAdhoc espnow;  // Start ESPNowAdhoc (Required)
+ESP_NowAdhoc espnow;  // Start ESP_NowAdhoc (Required)
 unsigned long lastDataSendTime = 0;
 unsigned long lastStatusSendTime = 0;
 
