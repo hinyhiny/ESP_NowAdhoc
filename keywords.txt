@@ -1,0 +1,64 @@
+#######################################
+# ESPNowAdhoc ライブラリ - キーワード定義
+#######################################
+
+#######################################
+# クラス (KEYWORD1 - 緑色で表示)
+#######################################
+ESPNowAdhoc	KEYWORD1
+ESPNowAdhocPeer	KEYWORD1
+
+#######################################
+# メソッドと関数 (KEYWORD2 - 茶色で表示)
+#######################################
+# ESPNowAdhoc クラスのメソッド
+begin	KEYWORD2              # 初期化
+update	KEYWORD2              # 更新処理
+setDebug	KEYWORD2          # デバッグ設定
+setBroadcastInterval	KEYWORD2    # ブロードキャスト間隔設定
+setHeartbeatInterval	KEYWORD2     # ハートビート間隔設定
+setHeartbeatTimeout	KEYWORD2      # ハートビートタイムアウト設定
+setStatusDisplayInterval	KEYWORD2 # ステータス表示間隔設定
+setGroupID	KEYWORD2          # グループID設定
+setChannel	KEYWORD2          # チャンネル設定
+setDataCallback	KEYWORD2       # データコールバック設定
+setPeerEventCallback	KEYWORD2   # ピアイベントコールバック設定
+sendToAll	KEYWORD2           # 全ピアに送信
+sendToServer	KEYWORD2        # サーバーピアに送信
+sendToClients	KEYWORD2        # クライアントピアに送信
+getServerPeerCount	KEYWORD2   # サーバーピア数取得
+getClientPeerCount	KEYWORD2   # クライアントピア数取得
+getTotalPeerCount	KEYWORD2    # 総ピア数取得
+
+# ESPNowAdhocPeer クラスのメソッド
+begin	KEYWORD2              # ピア初期化
+removePeer	KEYWORD2         # ピア削除
+sendData	KEYWORD2          # データ送信
+onSent	KEYWORD2             # 送信完了コールバック
+onReceive	KEYWORD2          # 受信コールバック
+
+#######################################
+# 定数とマクロ (LITERAL1 - オレンジ色で表示)
+#######################################
+# コマンド定義
+CMD_REGISTER	LITERAL1        # 登録コマンド
+CMD_HEARTBEAT	LITERAL1        # ハートビートコマンド
+CMD_DATA	LITERAL1            # データコマンド
+
+# デフォルト設定マクロ
+ESPNOW_WIFI_CHANNEL	LITERAL1    # Wi-Fiチャンネル
+ADV_GROUP_ID	LITERAL1        # アドバタイズグループID
+GROUP_ID	LITERAL1            # グループID
+HEARTBEAT_TIMEOUT	LITERAL1    # ハートビートタイムアウト
+HEARTBEAT_INTERVAL	LITERAL1   # ハートビート間隔
+BROADCAST_INTERVAL	LITERAL1   # ブロードキャスト間隔
+STATUS_DISPLAY_INTERVAL	LITERAL1 # ステータス表示間隔
+
+#######################################
+# データ型と構造体 (LITERAL2 - 青色で表示)
+#######################################
+espnow_message_t	LITERAL2      # メッセージ構造体
+
+# コールバック関数型
+DataCallback	LITERAL2        # データコールバック型
+PeerEventCallback	LITERAL2    # ピアイベントコールバック型
